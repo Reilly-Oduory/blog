@@ -1,11 +1,14 @@
+import os
+
+
 class Config:
     pass
-    SECRET_KEY = 'monket'
+    SECRET_KEY = os.environ.get("SECRET_KEY")
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'reilly.oduory@student.moringaschool.com'
-    MAIL_PASSWORD = 'BitchIcode'
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
 
 
 class DevConfig(Config):
@@ -14,7 +17,10 @@ class DevConfig(Config):
 
 
 class ProdConfig(Config):
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
+
 
 config_options = {
     'development' : DevConfig,
