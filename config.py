@@ -7,9 +7,11 @@ class Config:
     MAIL_USERNAME = 'reilly.oduory@student.moringaschool.com'
     MAIL_PASSWORD = 'BitchIcode'
 
+
 class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:password@localhost:5433/blog'
     DEBUG = True
+
 
 class ProdConfig(Config):
     pass

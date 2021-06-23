@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import displayPosts %}
 
 {% block content %}
-<h1>{{title}}</h1>
+    <div class="container mt-2">
+        <h3 class="text-muted text-center">Welcome to Reilly's Blog</h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {{ displayPosts(posts) }}
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
 {% endblock %}

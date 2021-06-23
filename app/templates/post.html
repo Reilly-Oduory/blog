@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-dark">
+                        <h4 class="card-title text-light">{{ post.title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text px-4">{{ post.content }}</p>
+                    </div>
+                    <br>
+                    <div class="text-center mb-2">
+                    <a href="{{ url_for('main.like', post_id = post.id) }}" class="btn btn-outline-primary">{{ post.likes }} Likes</a>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="/post/comment/new/{{ post.id }}" class="btn btn-outline-info">New Comment</a>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                {% for comment in comments %}
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h5>{{ comment.username }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ comment.comment }}</p>
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+{% endblock %}

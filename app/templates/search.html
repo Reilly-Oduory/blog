@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import displayPosts %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h3 class="text-primary text-center">{{ title }}</h3>
+                <hr>
+                {% if results %}
+                    {{ displayPosts(results) }}
+                {% else %}
+                    <p class="text-muted text-center">No Results for the above search</p>
+                {% endif %}
+                <div class="text-center">
+                    <u><a href="/">Go back to Home</a></u>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

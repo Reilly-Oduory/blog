@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% from "macros.html" import formField %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-info">Sign Up to Reilly's Blog</h1>
+        <hr>
+        {% if get_flashed_messages() %}
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <form action="{{url_for('auth.register')}}" method="post">
+            {{form.csrf_token}}
+            {{formField(form.email)}}
+            {{formField(form.username)}}
+            {{formField(form.password)}}
+            {{formField(form.password_confirm)}}
+            <div class="text-center">
+                <input type="submit" value="Login" class="btn btn-success text-center">
+            </div>
+        </form>
+        <br>
+        <div class="text-center">
+            <p>If you have an account you can <a href="login">SignIn</a> </p>
+        </div>
+    </div>
+{% endblock %}

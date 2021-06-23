@@ -1,0 +1,4 @@
+Hello {{user.username}}
+Welcome to Reilly's Blog
+We are glad to have you join the family.
+We will notify you when there are new blog posts.

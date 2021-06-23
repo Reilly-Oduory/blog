@@ -9,28 +9,19 @@ from . import login_manager
 def load_user(id):
     return User.query.get(int(id))
 
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String, index = True)
-    email = db.Column(db.String, unique = True, index = True)
-    password = db.Column(db.String(255))
-    posts = db.relationship('Post', backref = 'user', lazy = "dynamic")
-    comments = db.relationship('Comment', backref = 'user', lazy = "dynamic")
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, index=True)
+    email = db.Column(db.String, unique=True, index=True)
+    pass_secure = db.Column(db.String(255))
+    posts = db.relationship('Post', backref='user', lazy="dynamic")
+    comments = db.relationship('Comment', backref='user', lazy="dynamic")
 
     def __repr__(self):
         return f'User {self.username}'
-
-    def __init__(self,username,email,pass_secure):
-        self.username = username
-        self.email = email
-        self.pass_secure = pass_secure
-
-    # save user
-    def save_user(self):
-        db.session.add(self)
-        db.session.commit()
 
     @property
     def password(self):
@@ -43,22 +34,35 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.pass_secure, password)
 
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = password
+
+    # save user
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
+
+
 # Post object
+
 
 class Post(db.Model):
     __tablename__ = 'posts'
+    __searchable__ = ['title']
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     content = db.Column(db.String)
     likes = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comments = db.relationship('PostComments', backref = 'post', dynamic = "lazy")
+    comments = db.relationship('Comment', backref='post', lazy="dynamic")
 
     def __repr__(self):
         return f'Post {self.title}'
 
-    def __init__(self,user_id, title, content, likes = 0):
+    def __init__(self, user_id, title, content, likes=0):
         self.user_id = user_id
         self.title = title
         self.content = content
@@ -81,10 +85,16 @@ class Post(db.Model):
         return posts
 
     @classmethod
+    def search_post(cls,post_name):
+        posts = Post.query.filter_by(title = post_name).all()
+        return posts
+
+    @classmethod
     def delete_post(cls, id):
         post  = Post.query.filter_by(id = id).first()
         db.session.delete(post)
         db.session.commit()
+
 
 class Comment(db.Model):
     __tablename__ = 'comments'

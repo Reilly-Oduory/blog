@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import displayProfilePosts %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="text-center">
+            <span class="badge rounded-pill bg-info text-light p-4" style="font-size: 1.75em;">{{ user.username }}'s posts</span>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {{ displayProfilePosts(posts) }}
+                <div class="text-center">
+                    <a href="/post/new" class="btn btn-primary">New Post</a>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+{% endblock %}

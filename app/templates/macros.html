@@ -1,0 +1,47 @@
+{% macro formField(field)  %}
+    <div class="form-group">
+        {{field.label}}
+        {{field(class = "form-control")|safe }}
+    </div>
+{% endmacro %}
+
+{% macro displayPosts(post_list) %}
+    {% for post in post_list %}
+        <div class="card">
+        <div class="card-header bg-primary">
+            <h4 class="card-title text-light">{{ post.title }}</h4>
+        </div>
+            <div class="card-body">
+                <p class="card-text text-dark">{{ post.content | truncate(50) }}</p>
+                <h6 class="card-subtitle text-right">
+                    <span class="badge badge-secondary">Tech</span>
+                </h6>
+                <br>
+                <div class="text-center">
+                    <a href="/post/{{ post.id }}" class="btn btn-primary">View full Post</a>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+{% endmacro %}
+
+{% macro displayProfilePosts(post_list) %}
+    {% for post in post_list %}
+        <div class="card">
+        <div class="card-header bg-info">
+            <h4 class="card-title text-light">{{ post.title }}</h4>
+        </div>
+            <div class="card-body">
+                <p class="card-text text-dark">{{ post.content | truncate(50) }}</p>
+                <div class="text-center mt-4">
+                    <a href="/post/{{ post.id }}" class="btn btn-info">View full Post</a>
+                </div>
+                <div class="text-right">
+                    <h6 class="text-info">{{ post.likes }} likes</h6>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+{% endmacro %}
