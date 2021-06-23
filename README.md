@@ -1,4 +1,4 @@
-# First Impression APP
+# Reilly's Idea Blog
 This is a blog that enables people to share ideas.
 
 ## User stories
